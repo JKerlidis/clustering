@@ -210,6 +210,7 @@ public class PointsReader {
   // Run the algorithm
   public static void main(String[] args) {
     try {
+      // Read in the points from file
       FileReader pointsListFR = new FileReader("points.txt");
       BufferedReader pointsList = new BufferedReader(pointsListFR);
 
@@ -218,21 +219,31 @@ public class PointsReader {
         pointClusters.add(pointInit);
       }
 
-      ClusterCentres initPoints = new ClusterCentres(pointClusters, k);
-      initPoints.printClusterCentreInfo();
+      // Initialise the centre points of each cluster
+      ClusterCentres centrePoints = new ClusterCentres(pointClusters, k);
+      centrePoints.printClusterCentreInfo();
 
-      for (int i = 0; i < pointClusters.size(); i++) {
-        Pair pointCluster = pointClusters.get(i);
-        pointCluster.setCluster(initPoints.getCentres());
-        pointClusters.set(i, pointCluster);
+      // Iterate the algorithm
+      int iterations = 1;
+
+      while (centrePoints.getLastIterDist() > 0.5) {
+        for (int i = 0; i < pointClusters.size(); i++) {
+          Pair pointCluster = pointClusters.get(i);
+          pointCluster.setCluster(centrePoints.getCentres());
+          pointClusters.set(i, pointCluster);
+        }
+
+        centrePoints.updateClusters(pointClusters);
+        centrePoints.printClusterCentreInfo();
+
+        iterations += 1;
       }
 
-    System.out.println();
-    initPoints.updateClusters(pointClusters);
-    initPoints.printClusterCentreInfo();
-
-    System.out.println(initPoints.getLastIterDist());
-
+      // Print out the final clusters corresponding to each of the points
+      System.out.println("Number of iterations: " + iterations + "\n");
+      for (Pair pointPair: pointClusters) {
+        pointPair.printClusterInfo();
+      }
     }
     catch (IOException ioe) {
       ioe.printStackTrace();
