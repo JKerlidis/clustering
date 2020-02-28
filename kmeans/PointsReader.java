@@ -209,6 +209,9 @@ public class PointsReader {
 
   // Run the algorithm
   public static void main(String[] args) {
+    // Set distance between iterations at which to stop the algorithm
+    double STOP_ITER_DISTANCE = 0.01;
+
     try {
       // Read in the points from file
       FileReader pointsListFR = new FileReader("points.txt");
@@ -226,7 +229,7 @@ public class PointsReader {
       // Iterate the algorithm
       int iterations = 1;
 
-      while (centrePoints.getLastIterDist() > 0.5) {
+      while (centrePoints.getLastIterDist() > STOP_ITER_DISTANCE) {
         for (int i = 0; i < pointClusters.size(); i++) {
           Pair pointCluster = pointClusters.get(i);
           pointCluster.setCluster(centrePoints.getCentres());
