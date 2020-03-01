@@ -157,7 +157,7 @@ class RandomMVNParams {
 }
 
 
-/* Wrapper class for RandomMVNParams that ensures all covaraince matrices are
+/* Wrapper class for RandomMVNParams that ensures all covariance matrices are
 positive definite */
 class RandomMVN {
   public RandomMVNParams params;
