@@ -210,7 +210,7 @@ public class PointsReader {
   // Run the algorithm
   public static void main(String[] args) {
     // Set distance between iterations at which to stop the algorithm
-    double STOP_ITER_DISTANCE = 0.01;
+    double STOP_ITER_DISTANCE = 0;
 
     try {
       // Read in the points from file
